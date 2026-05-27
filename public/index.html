@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AstroKundli AI</title>
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body{
+
+            font-family:'Poppins',sans-serif;
+
+            background:#050505;
+
+            color:white;
+
+            overflow-x:hidden;
+
+        }
+
+        body::before{
+
+            content:"";
+
+            position:fixed;
+
+            width:100%;
+
+            height:100%;
+
+            background:
+
+            radial-gradient(
+                circle at top left,
+                rgba(255,170,0,0.18),
+                transparent 30%
+            ),
+
+            radial-gradient(
+                circle at bottom right,
+                rgba(0,150,255,0.15),
+                transparent 30%
+            );
+
+            z-index:-1;
+
+        }
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header{
+
+            width:100%;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            padding:24px 80px;
+
+            position:fixed;
+
+            top:0;
+
+            left:0;
+
+            z-index:1000;
+
+            backdrop-filter:blur(18px);
+
+            background:rgba(0,0,0,0.45);
+
+            border-bottom:
+            1px solid rgba(255,255,255,0.08);
+
+        }
+
+        .logo{
+
+            font-size:2rem;
+
+            font-weight:700;
+
+            color:#ffb340;
+
+        }
+
+        .navbar{
+
+            display:flex;
+
+            gap:40px;
+
+        }
+
+        .navbar a{
+
+            text-decoration:none;
+
+            color:white;
+
+            transition:0.3s;
+
+        }
+
+        .navbar a:hover{
+
+            color:#ffb340;
+
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero{
+
+            min-height:100vh;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:space-between;
+
+            padding:140px 80px 80px;
+
+            gap:80px;
+
+            position:relative;
+
+        }
+
+        .hero-left{
+
+            flex:1;
+
+            max-width:700px;
+
+        }
+
+        .badge{
+
+            padding:10px 20px;
+
+            border-radius:999px;
+
+            background:
+
+            rgba(255,255,255,0.08);
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            font-size:0.9rem;
+
+        }
+
+        .hero-left h1{
+
+            font-size:5.5rem;
+
+            line-height:1.05;
+
+            margin:25px 0;
+
+            font-weight:800;
+
+        }
+
+        .hero-left p{
+
+            font-size:1.15rem;
+
+            line-height:1.9;
+
+            opacity:0.85;
+
+            max-width:650px;
+
+        }
+
+        .hero-buttons{
+
+            display:flex;
+
+            gap:20px;
+
+            margin-top:40px;
+
+        }
+
+        .primary-btn,
+        .secondary-btn{
+
+            height:58px;
+
+            padding:0 35px;
+
+            border:none;
+
+            border-radius:18px;
+
+            font-size:1rem;
+
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:0.35s;
+
+        }
+
+        .primary-btn{
+
+            background:
+            linear-gradient(
+                135deg,
+                #ffb340,
+                #ff7b00
+            );
+
+            color:white;
+
+        }
+
+        .secondary-btn{
+
+            background:
+            rgba(255,255,255,0.06);
+
+            color:white;
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover{
+
+            transform:translateY(-4px);
+
+        }
+
+        /* =========================
+           STATS
+        ========================== */
+
+        .stats{
+
+            display:flex;
+
+            gap:24px;
+
+            margin-top:55px;
+
+        }
+
+        .stat-card{
+
+            width:170px;
+
+            height:150px;
+
+            border-radius:24px;
+
+            background:
+            rgba(255,255,255,0.05);
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            display:flex;
+
+            flex-direction:column;
+
+            justify-content:center;
+
+            align-items:center;
+
+            transition:0.35s;
+
+        }
+
+        .stat-card:hover{
+
+            transform:translateY(-8px);
+
+        }
+
+        .stat-card h2{
+
+            font-size:3rem;
+
+            color:#ffb340;
+
+        }
+
+        /* =========================
+           GLASS CARD
+        ========================== */
+
+        .hero-right{
+
+            width:520px;
+
+        }
+
+        .glass-card{
+
+            width:100%;
+
+            padding:40px;
+
+            border-radius:32px;
+
+            background:
+            rgba(255,255,255,0.06);
+
+            backdrop-filter:blur(24px);
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            box-shadow:
+            0 20px 80px rgba(0,0,0,0.45);
+
+        }
+
+        .glass-card h2{
+
+            font-size:3rem;
+
+            margin-bottom:30px;
+
+        }
+
+        form{
+
+            display:flex;
+
+            flex-direction:column;
+
+            gap:22px;
+
+        }
+
+        input{
+
+            width:100%;
+
+            height:62px;
+
+            border:none;
+
+            outline:none;
+
+            border-radius:18px;
+
+            padding:0 22px;
+
+            background:
+            rgba(255,255,255,0.06);
+
+            color:white;
+
+            font-size:1rem;
+
+        }
+
+        input::placeholder{
+
+            color:
+            rgba(255,255,255,0.55);
+
+        }
+
+        .row{
+
+            display:grid;
+
+            grid-template-columns:
+            1fr 1fr 1fr;
+
+            gap:18px;
+
+        }
+
+        /* =========================
+           GENDER
+        ========================== */
+
+        .gender{
+
+            display:flex;
+
+            gap:18px;
+
+        }
+
+        .gender button{
+
+            flex:1;
+
+            height:60px;
+
+            border:none;
+
+            border-radius:18px;
+
+            cursor:pointer;
+
+            font-size:1rem;
+
+            font-weight:600;
+
+            transition:0.35s;
+
+            background:
+            rgba(255,255,255,0.06);
+
+            color:white;
+
+        }
+
+        .gender button.active{
+
+            background:#ff9f1c;
+
+            color:black;
+
+        }
+
+        .gender button:hover{
+
+            transform:translateY(-2px);
+
+        }
+
+        /* =========================
+           GENERATE BUTTON
+        ========================== */
+
+        .generate-btn{
+
+            width:100%;
+
+            height:64px;
+
+            border:none;
+
+            border-radius:18px;
+
+            background:
+            linear-gradient(
+                135deg,
+                #ffb340,
+                #ff7b00
+            );
+
+            color:white;
+
+            font-size:1.1rem;
+
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:0.4s;
+
+            margin-top:10px;
+
+        }
+
+        .generate-btn:hover{
+
+            transform:translateY(-4px);
+
+            box-shadow:
+            0 15px 40px rgba(255,150,0,0.35);
+
+        }
+
+        /* =========================
+           FEATURES
+        ========================== */
+
+        .features{
+
+            padding:120px 80px;
+
+        }
+
+        .section-title{
+
+            text-align:center;
+
+            margin-bottom:70px;
+
+        }
+
+        .section-title span{
+
+            color:#ffb340;
+
+        }
+
+        .section-title h2{
+
+            font-size:4rem;
+
+            margin-top:12px;
+
+        }
+
+        .feature-grid{
+
+            display:grid;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(320px,1fr));
+
+            gap:30px;
+
+        }
+
+        .feature-card{
+
+            padding:40px;
+
+            border-radius:28px;
+
+            background:
+            rgba(255,255,255,0.04);
+
+            border:
+            1px solid rgba(255,255,255,0.06);
+
+            transition:0.4s;
+
+        }
+
+        .feature-card:hover{
+
+            transform:translateY(-10px);
+
+            border-color:#ffb340;
+
+        }
+
+        .feature-card .icon{
+
+            font-size:2.5rem;
+
+            margin-bottom:20px;
+
+        }
+
+        .feature-card h3{
+
+            font-size:1.6rem;
+
+            margin-bottom:12px;
+
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer{
+
+            padding:80px;
+
+            border-top:
+            1px solid rgba(255,255,255,0.08);
+
+            margin-top:100px;
+
+        }
+
+        .footer-grid{
+
+            display:grid;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(250px,1fr));
+
+            gap:40px;
+
+        }
+
+        footer h2,
+        footer h3{
+
+            margin-bottom:20px;
+
+        }
+
+        footer a{
+
+            display:block;
+
+            color:white;
+
+            text-decoration:none;
+
+            margin-bottom:12px;
+
+            opacity:0.75;
+
+        }
+
+        .copyright{
+
+            margin-top:60px;
+
+            opacity:0.6;
+
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media(max-width:1100px){
+
+            .hero{
+
+                flex-direction:column;
+
+                text-align:center;
+
+            }
+
+            .hero-right{
+
+                width:100%;
+
+            }
+
+            .hero-left h1{
+
+                font-size:4rem;
+
+            }
+
+        }
+
+        @media(max-width:700px){
+
+            .header{
+
+                padding:20px;
+
+            }
+
+            .navbar{
+
+                display:none;
+
+            }
+
+            .hero{
+
+                padding:120px 20px 60px;
+
+            }
+
+            .hero-left h1{
+
+                font-size:3rem;
+
+            }
+
+            .row{
+
+                grid-template-columns:1fr;
+
+            }
+
+            .stats{
+
+                flex-direction:column;
+
+                align-items:center;
+
+            }
+
+            .section-title h2{
+
+                font-size:2.6rem;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            🔱 AstroKundli AI
+
+        </div>
+
+        <nav class="navbar">
+
+            <a href="#">Horoscope</a>
+            <a href="#">Love</a>
+            <a href="#">Compatibility</a>
+            <a href="#">Numerology</a>
+            <a href="#">Kundli</a>
+
+        </nav>
+
+    </header>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <!-- LEFT -->
+
+        <div class="hero-left">
+
+            <span class="badge">
+
+                #1 Astrology Platform
+
+            </span>
+
+            <h1>
+
+                Generate Your Accurate Kundli Report Instantly
+
+            </h1>
+
+            <p>
+
+                Discover your planetary positions,
+                zodiac insights, relationship compatibility,
+                horoscope predictions and personalized
+                Vedic astrology analysis.
+
+            </p>
+
+            <div class="hero-buttons">
+
+                <button class="primary-btn">
+
+                    Explore Astrology
+
+                </button>
+
+                <button class="secondary-btn">
+
+                    Live Horoscope
+
+                </button>
+
+            </div>
+
+            <!-- STATS -->
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <h2>10M+</h2>
+
+                    <p>Users</p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h2>99%</h2>
+
+                    <p>Accuracy</p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h2>24/7</h2>
+
+                    <p>Astrology</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="hero-right">
+
+            <div class="glass-card">
+
+                <h2>
+
+                    Get Your Free Kundli
+
+                </h2>
+
+                <form id="kundliForm">
+
+                    <!-- NAME -->
+
+                    <input
+                        id="name"
+                        type="text"
+                        placeholder="Full Name"
+                        required
+                    >
+
+                    <!-- GENDER -->
+
+                    <div class="gender">
+
+                        <button
+                            type="button"
+                            class="male-btn active"
+                        >
+                            Male
+                        </button>
+
+                        <button
+                            type="button"
+                            class="female-btn"
+                        >
+                            Female
+                        </button>
+
+                    </div>
+
+                    <!-- DOB -->
+
+                    <div class="row">
+
+                        <input
+                            id="day"
+                            type="number"
+                            placeholder="Day"
+                        >
+
+                        <input
+                            id="month"
+                            type="number"
+                            placeholder="Month"
+                        >
+
+                        <input
+                            id="year"
+                            type="number"
+                            placeholder="Year"
+                        >
+
+                    </div>
+
+                    <!-- TIME -->
+
+                    <div class="row">
+
+                        <input
+                            id="hour"
+                            type="number"
+                            placeholder="Hour"
+                        >
+
+                        <input
+                            id="minute"
+                            type="number"
+                            placeholder="Minute"
+                        >
+
+                        <input
+                            id="second"
+                            type="number"
+                            placeholder="Second"
+                            value="00"
+                        >
+
+                    </div>
+
+                    <!-- PLACE -->
+
+                    <input
+                        id="place"
+                        type="text"
+                        placeholder="Place of Birth"
+                    >
+
+                    <!-- GENERATE -->
+
+                    <button
+                        type="button"
+                        class="generate-btn"
+                    >
+
+                        Generate Kundli
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FEATURES -->
+
+    <section class="features">
+
+        <div class="section-title">
+
+            <span>
+
+                Why Choose Us
+
+            </span>
+
+            <h2>
+
+                Advanced Astrology Features
+
+            </h2>
+
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <div class="icon">
+
+                    🌌
+
+                </div>
+
+                <h3>
+
+                    AI Kundli Analysis
+
+                </h3>
+
+                <p>
+
+                    Advanced astrology engine
+                    with intelligent planetary
+                    calculations.
+
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="icon">
+
+                    🔮
+
+                </div>
+
+                <h3>
+
+                    Future Predictions
+
+                </h3>
+
+                <p>
+
+                    Career, relationship and
+                    financial prediction system.
+
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="icon">
+
+                    🪐
+
+                </div>
+
+                <h3>
+
+                    Planetary Mapping
+
+                </h3>
+
+                <p>
+
+                    Dynamic zodiac chart and
+                    kundli generation engine.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-grid">
+
+            <div>
+
+                <h2>
+
+                    🔱 AstroKundli AI
+
+                </h2>
+
+                <p>
+
+                    Premium astrology platform
+                    with AI-powered kundli analysis.
+
+                </p>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Quick Links
+
+                </h3>
+
+                <a href="#">Horoscope</a>
+                <a href="#">Love Match</a>
+                <a href="#">Numerology</a>
+                <a href="#">Kundli</a>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Services
+
+                </h3>
+
+                <a href="#">Birth Chart</a>
+                <a href="#">Palm Reading</a>
+                <a href="#">Gemstones</a>
+                <a href="#">Predictions</a>
+
+            </div>
+
+        </div>
+
+        <div class="copyright">
+
+            © 2026 AstroKundli AI.
+            All Rights Reserved.
+
+        </div>
+
+    </footer>
+
+    <!-- APP JS -->
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

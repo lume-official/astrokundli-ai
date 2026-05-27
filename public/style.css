@@ -1,0 +1,1438 @@
+/* =========================================================
+   ASTROKUNDLI AI — GOD LEVEL COSMIC UI SYSTEM
+   FULL PREMIUM UPGRADED VERSION
+========================================================= */
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:#040404;
+
+    color:#ffffff;
+
+    overflow-x:hidden;
+
+    min-height:100vh;
+
+    position:relative;
+}
+
+/* =========================
+   COSMIC BACKGROUND
+========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:1200px;
+    height:1200px;
+
+    top:-500px;
+    left:-500px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,140,0,0.18),
+        transparent 70%
+    );
+
+    filter:blur(120px);
+
+    z-index:-3;
+
+    animation:
+    cosmicMove1 20s infinite alternate ease-in-out;
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:1200px;
+    height:1200px;
+
+    bottom:-500px;
+    right:-500px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(0,170,255,0.12),
+        transparent 70%
+    );
+
+    filter:blur(120px);
+
+    z-index:-3;
+
+    animation:
+    cosmicMove2 24s infinite alternate ease-in-out;
+}
+
+@keyframes cosmicMove1{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(180px,120px);
+    }
+
+}
+
+@keyframes cosmicMove2{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(-180px,-120px);
+    }
+
+}
+
+/* =========================
+   STARS
+========================= */
+
+.stars{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:-2;
+
+    opacity:0.08;
+
+    background-image:
+    radial-gradient(
+        white 1px,
+        transparent 1px
+    );
+
+    background-size:45px 45px;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#090909;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:
+    linear-gradient(
+        #ffb347,
+        #ff6a00
+    );
+
+    border-radius:20px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.dashboard-header{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    height:90px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 50px;
+
+    z-index:1000;
+
+    background:
+    rgba(0,0,0,0.55);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+.logo{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#ffb347;
+
+    letter-spacing:1px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.download-btn{
+
+    border:none;
+
+    outline:none;
+
+    padding:16px 34px;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ffb347,
+        #ff6a00
+    );
+
+    box-shadow:
+    0 12px 40px rgba(255,106,0,0.25);
+
+    transition:0.35s ease;
+}
+
+.download-btn:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.03);
+
+    box-shadow:
+    0 20px 55px rgba(255,106,0,0.45);
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.dashboard-hero{
+
+    width:100%;
+
+    min-height:500px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding-top:100px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #140b22,
+        #050505
+    );
+}
+
+.hero-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,140,0,0.14),
+        transparent 65%
+    );
+
+    animation:
+    overlayPulse 6s infinite alternate;
+}
+
+@keyframes overlayPulse{
+
+    from{
+        opacity:0.5;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    max-width:1200px;
+
+    padding:40px;
+}
+
+.hero-content h1{
+
+    font-size:6rem;
+
+    font-weight:800;
+
+    margin-bottom:20px;
+
+    background:
+    linear-gradient(
+        to right,
+        #ffffff,
+        #ffcc80
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-content p{
+
+    font-size:1.2rem;
+
+    line-height:1.9;
+
+    color:#d8d8d8;
+}
+
+/* =========================
+   MAIN GRID
+========================= */
+
+.dashboard-grid{
+
+    width:100%;
+
+    max-width:1800px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    1.2fr 0.8fr;
+
+    gap:30px;
+
+    padding:50px;
+
+    margin-top:-80px;
+
+    position:relative;
+
+    z-index:5;
+}
+
+/* =========================
+   COLUMNS
+========================= */
+
+.left-column,
+.right-column{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:30px;
+}
+
+/* =========================
+   GLASS CARDS
+========================= */
+
+.card{
+
+    width:100%;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:32px;
+
+    padding:35px;
+
+    backdrop-filter:blur(22px);
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
+
+    transition:0.4s ease;
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.05),
+        transparent
+    );
+
+    transition:0.8s;
+}
+
+.card:hover::before{
+
+    left:100%;
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:
+    rgba(255,180,70,0.25);
+
+    box-shadow:
+    0 25px 70px rgba(255,140,0,0.15);
+}
+
+.card h2{
+
+    font-size:2rem;
+
+    margin-bottom:28px;
+
+    color:white;
+}
+
+/* =========================
+   INFO GRIDS
+========================= */
+
+.info-grid,
+.summary-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(
+        auto-fit,
+        minmax(
+            220px,
+            1fr
+        )
+    );
+
+    gap:20px;
+}
+
+/* =========================
+   SMALL CARDS
+========================= */
+
+.info-card,
+.summary-card,
+.prediction-card,
+.dasha-card,
+.yoga-card,
+.aspect-card,
+.navamsa-card,
+.transit-card{
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    border-radius:24px;
+
+    padding:24px;
+
+    transition:0.35s ease;
+}
+
+.info-card:hover,
+.summary-card:hover,
+.prediction-card:hover,
+.dasha-card:hover,
+.yoga-card:hover,
+.aspect-card:hover,
+.navamsa-card:hover,
+.transit-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:
+    rgba(255,180,70,0.25);
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,0.25);
+}
+
+.info-card h3,
+.summary-card h3,
+.prediction-card h3,
+.dasha-card h3,
+.yoga-card h3,
+.aspect-card h3{
+
+    font-size:1.2rem;
+
+    margin-bottom:12px;
+
+    color:#ffb347;
+}
+
+.info-card p,
+.summary-card p,
+.prediction-card p,
+.dasha-card p,
+.yoga-card p,
+.aspect-card p,
+.navamsa-card p,
+.transit-card p{
+
+    color:#e7e7e7;
+
+    line-height:1.8;
+}
+
+/* =========================
+   PLANETS
+========================= */
+
+#planetContainer{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+}
+
+.planet-card{
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    border-radius:24px;
+
+    padding:28px;
+
+    transition:0.35s ease;
+}
+
+.planet-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#ffb347;
+}
+
+.planet-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.planet-top h3{
+
+    font-size:1.5rem;
+
+    color:white;
+}
+
+.planet-top span{
+
+    color:#ffb347;
+
+    font-weight:600;
+}
+
+.planet-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:18px;
+
+    color:#d7d7d7;
+}
+
+/* =========================
+   CHART
+========================= */
+
+#kundliChart{
+
+    width:100%;
+
+    min-height:650px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+}
+
+/* =========================
+   COSMIC ORBIT
+========================= */
+
+.chart-circle{
+
+    width:520px;
+    height:520px;
+
+    border-radius:50%;
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,140,0,0.08),
+        rgba(0,0,0,0.85)
+    );
+
+    border:
+    2px solid rgba(255,180,70,0.18);
+
+    box-shadow:
+
+    0 0 120px rgba(255,140,0,0.12),
+
+    inset 0 0 80px rgba(255,140,0,0.08);
+
+    animation:
+    orbitRotate 120s linear infinite;
+}
+
+.chart-circle::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:340px;
+    height:340px;
+
+    border-radius:50%;
+
+    border:
+    1px dashed rgba(255,180,70,0.18);
+
+    animation:
+    reverseRotate 50s linear infinite;
+}
+
+.chart-circle::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-40px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,140,0,0.08),
+        transparent 70%
+    );
+
+    filter:blur(60px);
+
+    z-index:-1;
+
+    animation:
+    cosmicPulse 5s infinite alternate;
+}
+
+/* =========================
+   SUN CORE
+========================= */
+
+.chart-center{
+
+    width:130px;
+    height:130px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+    background:
+    radial-gradient(
+        circle at top,
+        #ffdd99,
+        #ff9900,
+        #ff5e00
+    );
+
+    color:white;
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    box-shadow:
+
+    0 0 40px rgba(255,140,0,0.6),
+
+    0 0 120px rgba(255,90,0,0.35),
+
+    inset 0 0 20px rgba(255,255,255,0.4);
+
+    animation:
+    sunPulse 3s infinite alternate;
+}
+
+.chart-center::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-20px;
+
+    border-radius:50%;
+
+    border:
+    2px solid rgba(255,180,70,0.2);
+
+    animation:
+    flarePulse 4s infinite;
+}
+
+/* =========================
+   PLANET NODES
+========================= */
+
+.planet-node{
+
+    position:absolute;
+
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,180,70,0.9),
+        rgba(255,100,0,0.9)
+    );
+
+    color:white;
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    box-shadow:
+    0 0 25px rgba(255,140,0,0.4);
+
+    transition:0.4s ease;
+}
+
+.planet-node:hover{
+
+    transform:scale(1.15);
+
+    box-shadow:
+    0 0 45px rgba(255,140,0,0.8);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes orbitRotate{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+@keyframes reverseRotate{
+
+    from{
+        transform:rotate(360deg);
+    }
+
+    to{
+        transform:rotate(0deg);
+    }
+
+}
+
+@keyframes cosmicPulse{
+
+    from{
+
+        opacity:0.4;
+        transform:scale(0.95);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:scale(1.05);
+
+    }
+
+}
+
+@keyframes sunPulse{
+
+    from{
+        transform:scale(1);
+    }
+
+    to{
+        transform:scale(1.06);
+    }
+
+}
+
+@keyframes flarePulse{
+
+    from{
+
+        transform:scale(1);
+        opacity:0.7;
+
+    }
+
+    to{
+
+        transform:scale(1.3);
+        opacity:0;
+
+    }
+
+}
+
+/* =========================
+   LOADER
+========================= */
+
+#pageLoader{
+
+    position:fixed;
+
+    inset:0;
+
+    background:#050505;
+
+    z-index:99999;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:25px;
+}
+
+.loader-ring{
+
+    width:90px;
+    height:90px;
+
+    border-radius:50%;
+
+    border:
+    5px solid rgba(255,255,255,0.08);
+
+    border-top:
+    5px solid #ffb347;
+
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+
+    100%{
+        transform:rotate(360deg);
+    }
+
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+
+    .dashboard-grid{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .dashboard-header{
+
+        padding:0 20px;
+    }
+
+    .dashboard-grid{
+
+        padding:20px;
+    }
+
+    .hero-content h1{
+
+        font-size:3rem;
+    }
+
+    .hero-content p{
+
+        font-size:1rem;
+    }
+
+    .info-grid,
+    .summary-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .planet-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .chart-circle{
+
+        width:320px;
+        height:320px;
+    }
+
+    .chart-circle::before{
+
+        width:220px;
+        height:220px;
+    }
+
+    .chart-center{
+
+        width:90px;
+        height:90px;
+
+        font-size:1.2rem;
+    }
+
+    .planet-node{
+
+        width:50px;
+        height:50px;
+
+        font-size:0.8rem;
+    }
+
+    .card{
+
+        padding:25px;
+    }
+
+}
+/* =========================================================
+   LIVE COSMIC SYSTEM
+========================================================= */
+
+.solar-system{
+
+    width:100%;
+    height:900px;
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+}
+
+/* =========================
+   SUN
+========================= */
+
+.sun-core{
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    radial-gradient(
+        circle at top,
+        #fff2c2,
+        #ffb347,
+        #ff6a00
+    );
+
+    box-shadow:
+
+    0 0 40px #ff9900,
+
+    0 0 120px rgba(255,120,0,0.7),
+
+    0 0 240px rgba(255,90,0,0.35);
+
+    animation:
+    sunPulse 4s infinite alternate;
+}
+
+.sun-core::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-40px;
+
+    border-radius:50%;
+
+    border:
+    2px solid rgba(255,180,70,0.12);
+
+    animation:
+    pulseRing 6s infinite;
+}
+
+.sun-inner{
+
+    font-size:2.4rem;
+
+    font-weight:800;
+
+    color:white;
+
+    text-shadow:
+    0 0 15px rgba(255,255,255,0.8);
+
+    animation:
+    textFloat 3s infinite ease-in-out;
+}
+
+/* =========================
+   ORBITS
+========================= */
+
+.planet-orbit{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    border:
+    1px dashed rgba(255,180,70,0.12);
+
+    display:flex;
+
+    justify-content:flex-start;
+
+    align-items:center;
+
+    animation:
+    rotateOrbit linear infinite;
+}
+
+/* =========================
+   PLANETS
+========================= */
+
+.planet-node-live{
+
+    position:absolute;
+
+    top:50%;
+    left:-20px;
+
+    transform:
+    translateY(-50%);
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:0.7rem;
+
+    font-weight:700;
+
+    color:white;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(12px);
+
+    cursor:pointer;
+
+    transition:0.4s ease;
+}
+
+.planet-node-live:hover{
+
+    transform:
+    translateY(-50%)
+    scale(1.15);
+
+    z-index:100;
+}
+
+.planet-node-live span{
+
+    position:relative;
+
+    z-index:5;
+
+    text-shadow:
+    0 0 10px rgba(255,255,255,0.7);
+}
+
+/* =========================
+   PLANET GLOW
+========================= */
+
+.planet-glow{
+
+    position:absolute;
+
+    inset:-20px;
+
+    border-radius:50%;
+
+    opacity:0.35;
+
+    filter:blur(20px);
+
+    animation:
+    glowPulse 3s infinite alternate;
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.space-particle{
+
+    position:absolute;
+
+    width:3px;
+    height:3px;
+
+    border-radius:50%;
+
+    background:white;
+
+    opacity:0.5;
+
+    animation:
+    particleMove linear infinite;
+}
+
+/* =========================
+   BACKGROUND GLOW
+========================= */
+
+.space-glow{
+
+    position:absolute;
+
+    width:900px;
+    height:900px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,140,0,0.08),
+        transparent 70%
+    );
+
+    filter:blur(100px);
+
+    animation:
+    cosmicBreath 8s infinite alternate;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes rotateOrbit{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+@keyframes particleMove{
+
+    from{
+
+        transform:
+        translateY(0px)
+        translateX(0px);
+
+        opacity:0;
+
+    }
+
+    50%{
+
+        opacity:1;
+
+    }
+
+    to{
+
+        transform:
+        translateY(-400px)
+        translateX(200px);
+
+        opacity:0;
+
+    }
+
+}
+
+@keyframes glowPulse{
+
+    from{
+
+        opacity:0.2;
+        transform:scale(0.9);
+
+    }
+
+    to{
+
+        opacity:0.6;
+        transform:scale(1.15);
+
+    }
+
+}
+
+@keyframes cosmicBreath{
+
+    from{
+
+        transform:scale(0.9);
+
+    }
+
+    to{
+
+        transform:scale(1.1);
+
+    }
+
+}
+
+@keyframes pulseRing{
+
+    from{
+
+        transform:scale(1);
+        opacity:0.6;
+
+    }
+
+    to{
+
+        transform:scale(1.4);
+        opacity:0;
+
+    }
+
+}
+
+@keyframes textFloat{
+
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-6px);
+
+    }
+
+    100%{
+
+        transform:translateY(0px);
+
+    }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .solar-system{
+
+        height:650px;
+    }
+
+    .sun-core{
+
+        width:120px;
+        height:120px;
+    }
+
+    .sun-inner{
+
+        font-size:1.5rem;
+    }
+
+}

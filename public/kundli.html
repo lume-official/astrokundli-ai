@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        AstroKundli AI • Cosmic Dashboard
+    </title>
+
+    <!-- =========================
+         GOOGLE FONT
+    ========================== -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- =========================
+         MAIN CSS
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+<!-- =========================
+     PARTICLE BACKGROUND
+========================= -->
+
+<div class="particles">
+
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+
+</div>
+
+<!-- =========================
+     FLOATING GLOW
+========================= -->
+
+<div class="floating-glow glow-1"></div>
+<div class="floating-glow glow-2"></div>
+<div class="floating-glow glow-3"></div>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="dashboard-header">
+
+    <div class="header-left">
+
+        <div class="logo-icon">
+
+            🔱
+
+        </div>
+
+        <div class="logo-text">
+
+            <h1>
+                AstroKundli AI
+            </h1>
+
+            <span>
+                Advanced Vedic Intelligence
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="header-right">
+
+        <button class="download-btn">
+
+            Download PDF
+
+        </button>
+
+    </div>
+
+</header>
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+
+<section class="dashboard-hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-stars">
+
+        ✦ ✦ ✦ ✦ ✦ ✦ ✦
+
+    </div>
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+
+            ✨ AI Powered Astrology Analysis
+
+        </div>
+
+        <h1 id="userName">
+
+            Loading...
+
+        </h1>
+
+        <p id="userInfo">
+
+            Preparing Cosmic Blueprint...
+
+        </p>
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+
+                <h2>
+                    27
+                </h2>
+
+                <span>
+                    Nakshatras
+                </span>
+
+            </div>
+
+            <div class="hero-stat">
+
+                <h2>
+                    12
+                </h2>
+
+                <span>
+                    Zodiac Signs
+                </span>
+
+            </div>
+
+            <div class="hero-stat">
+
+                <h2>
+                    9
+                </h2>
+
+                <span>
+                    Planetary Forces
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     MAIN DASHBOARD
+========================= -->
+
+<main class="dashboard-grid">
+
+    <!-- =========================
+         LEFT COLUMN
+    ========================== -->
+
+    <div class="left-column">
+
+        <!-- CHART -->
+
+        <section class="card chart-card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        Cosmic Birth Chart
+
+                    </h2>
+
+                    <p>
+
+                        Planetary alignment visualization
+
+                    </p>
+
+                </div>
+
+                <div class="chart-status">
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+            <div id="kundliChart">
+
+                <div class="chart-loader">
+
+                    Loading Cosmic Chart...
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PLANETS -->
+
+        <section class="card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        Planetary Positions
+
+                    </h2>
+
+                    <p>
+
+                        Real-time astronomical calculations
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="planetContainer">
+
+            </div>
+
+        </section>
+
+        <!-- MAHADASHA -->
+
+        <section class="card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        Mahadasha Timeline
+
+                    </h2>
+
+                    <p>
+
+                        Current karmic planetary cycle
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="dashaContainer">
+
+            </div>
+
+        </section>
+
+        <!-- ENERGY -->
+
+        <section class="card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        Cosmic Energy Level
+
+                    </h2>
+
+                    <p>
+
+                        Spiritual and planetary resonance
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="energy-section">
+
+                <div class="energy-circle">
+
+                    <div class="energy-inner">
+
+                        82%
+
+                    </div>
+
+                </div>
+
+                <div class="energy-info">
+
+                    <h3>
+
+                        High Celestial Alignment
+
+                    </h3>
+
+                    <p>
+
+                        Strong planetary synchronization detected.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- =========================
+         RIGHT COLUMN
+    ========================== -->
+
+    <div class="right-column">
+
+        <!-- BASIC INFO -->
+
+        <section class="card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        Personal Information
+
+                    </h2>
+
+                    <p>
+
+                        Birth and identity data
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div
+                id="basicContainer"
+                class="info-grid"
+            >
+
+            </div>
+
+        </section>
+
+        <!-- SUMMARY -->
+
+        <section class="card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        Astrology Summary
+
+                    </h2>
+
+                    <p>
+
+                        Core astrological blueprint
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div
+                id="summaryContainer"
+                class="summary-grid"
+            >
+
+            </div>
+
+        </section>
+
+        <!-- PREDICTIONS -->
+
+        <section class="card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        AI Predictions
+
+                    </h2>
+
+                    <p>
+
+                        Advanced destiny analysis engine
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div
+                id="predictionContainer"
+            >
+
+            </div>
+
+        </section>
+
+        <!-- DOSHA -->
+
+        <section class="card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        Dosha Analysis
+
+                    </h2>
+
+                    <p>
+
+                        Karmic imbalance detection
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div
+                id="doshaContainer"
+            >
+
+            </div>
+
+        </section>
+
+<!-- YOGAS -->
+
+<section class="card glow-card">
+
+    <h2>
+
+        Powerful Yogas
+
+    </h2>
+
+    <div id="yogaContainer">
+
+    </div>
+
+</section>
+
+<!-- ASPECTS -->
+
+<section class="card glow-card">
+
+    <h2>
+
+        Planetary Aspects
+
+    </h2>
+
+    <div id="aspectContainer">
+
+    </div>
+
+</section>
+
+<!-- NAVAMSA -->
+
+<section class="card glow-card">
+
+    <h2>
+
+        Navamsa Insights
+
+    </h2>
+
+    <div id="navamsaContainer">
+
+    </div>
+
+</section>
+
+<!-- TRANSITS -->
+
+<section class="card glow-card">
+
+    <h2>
+
+        Current Transit Insights
+
+    </h2>
+
+    <div id="transitContainer">
+
+    </div>
+
+</section>
+
+<!-- ASPECTS -->
+
+<section class="card glow-card">
+
+    <div class="card-top">
+
+        <div>
+
+            <h2>
+
+                Planetary Aspects
+
+            </h2>
+
+            <p>
+
+                Planet interaction analysis
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div id="aspectContainer">
+
+    </div>
+
+</section>
+
+<!-- NAVAMSA -->
+
+<section class="card glow-card">
+
+    <div class="card-top">
+
+        <div>
+
+            <h2>
+
+                Navamsa Insights
+
+            </h2>
+
+            <p>
+
+                Soul and marriage destiny
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div id="navamsaContainer">
+
+    </div>
+
+</section>
+
+<!-- TRANSITS -->
+
+<section class="card glow-card">
+
+    <div class="card-top">
+
+        <div>
+
+            <h2>
+
+                Current Transit Insights
+
+            </h2>
+
+            <p>
+
+                Current planetary movement effects
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div id="transitContainer">
+
+    </div>
+
+</section>
+
+        <!-- DESTINY -->
+
+        <section class="card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        Destiny Alignment
+
+                    </h2>
+
+                    <p>
+
+                        Life path compatibility matrix
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="destiny-grid">
+
+                <div class="destiny-card">
+
+                    <h3>
+                        Career
+                    </h3>
+
+                    <span>
+                        88%
+                    </span>
+
+                </div>
+
+                <div class="destiny-card">
+
+                    <h3>
+                        Wealth
+                    </h3>
+
+                    <span>
+                        74%
+                    </span>
+
+                </div>
+
+                <div class="destiny-card">
+
+                    <h3>
+                        Love
+                    </h3>
+
+                    <span>
+                        81%
+                    </span>
+
+                </div>
+
+                <div class="destiny-card">
+
+                    <h3>
+                        Spirituality
+                    </h3>
+
+                    <span>
+                        92%
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SOUL INSIGHTS -->
+
+        <section class="card glow-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h2>
+
+                        Soul Insights
+
+                    </h2>
+
+                    <p>
+
+                        Deep consciousness interpretation
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="insight-box">
+
+                <div class="insight-line">
+
+                    ✨ Strong intuitive awareness detected
+
+                </div>
+
+                <div class="insight-line">
+
+                    🔥 Leadership planetary combinations active
+
+                </div>
+
+                <div class="insight-line">
+
+                    🌙 Emotional intelligence highly dominant
+
+                </div>
+
+                <div class="insight-line">
+
+                    🪐 Spiritual growth cycle beginning
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+<!-- =========================
+     LOADER
+========================= -->
+
+<div id="pageLoader">
+
+    <div class="loader-ring"></div>
+
+    <h2>
+
+        Generating Cosmic Blueprint...
+
+    </h2>
+
+</div>
+
+<!-- =========================
+     PDF LIBRARIES
+========================= -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- =========================
+     MAIN SCRIPT
+========================= -->
+
+<script src="kundli.js"></script>
+
+</body>
+
+</html>
