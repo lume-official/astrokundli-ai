@@ -1,42 +1,104 @@
 const express = require("express");
-const path = require("path");
 const cors = require("cors");
+const path = require("path");
 const dotenv = require("dotenv");
-
-/* =========================
-   ENV
-========================= */
 
 dotenv.config();
 
-/* =========================
-   ASTROLOGY IMPORTS
-========================= */
-
-const {
-
-    calculatePlanets,
-    calculateLagna,
-    calculateNakshatra,
-    calculateMoonSign,
-    calculateSunSign,
-    calculateManglik,
-    calculatePredictions
-
-} = require("./astrology/calculations");
-
-/* =========================
-   APP
-========================= */
-
 const app = express();
+
+/* =========================================
+   CONFIG
+========================================= */
 
 const PORT =
 process.env.PORT || 3000;
 
-/* =========================
-   SECURITY + PERFORMANCE
-========================= */
+const isProduction =
+process.env.NODE_ENV === "production";
+
+/* =========================================
+   SAFE ASTROLOGY LOADER
+========================================= */
+
+let astro = {
+
+    ready:false,
+
+    error:null,
+
+    engine:null
+
+};
+
+async function initializeAstrology(){
+
+    try{
+
+        console.log("Loading Astrology Engine...");
+
+        const calculations =
+        require("./astrology/calculations");
+
+        const yogas =
+        require("./astrology/yogas");
+
+        const aspects =
+        require("./astrology/aspects");
+
+        const transits =
+        require("./astrology/transits");
+
+        const navamsa =
+        require("./astrology/navamsa");
+
+        astro = {
+
+            ready:true,
+
+            error:null,
+
+            engine:{
+
+                calculations,
+                yogas,
+                aspects,
+                transits,
+                navamsa
+
+            }
+
+        };
+
+        console.log("Astrology Engine Loaded");
+
+    }
+
+    catch(error){
+
+        console.log("ASTROLOGY ENGINE FAILED");
+
+        console.log(error);
+
+        astro = {
+
+            ready:false,
+
+            error:error.message,
+
+            engine:null
+
+        };
+
+    }
+
+}
+
+initializeAstrology();
+
+/* =========================================
+   MIDDLEWARE
+========================================= */
 
 app.disable("x-powered-by");
 
@@ -53,7 +115,7 @@ app.use(cors({
 
 app.use(express.json({
 
-    limit:"10mb"
+    limit:"20mb"
 
 }));
 
@@ -61,23 +123,20 @@ app.use(express.urlencoded({
 
     extended:true,
 
-    limit:"10mb"
+    limit:"20mb"
 
 }));
 
-/* =========================
+/* =========================================
    REQUEST LOGGER
-========================= */
+========================================= */
 
 app.use((req,res,next)=>{
 
     console.log(`
 
-========================================
-🌍 ${req.method}
-📍 ${req.url}
-🕒 ${new Date().toLocaleString()}
-========================================
+${req.method}
+${req.url}
 
 `);
 
@@ -85,9 +144,9 @@ app.use((req,res,next)=>{
 
 });
 
-/* =========================
+/* =========================================
    STATIC FILES
-========================= */
+========================================= */
 
 app.use(
 
@@ -96,23 +155,82 @@ app.use(
         path.join(
             __dirname,
             "public"
-        ),
-
-        {
-
-            maxAge:"1d",
-
-            etag:true
-
-        }
+        )
 
     )
 
 );
 
-/* =========================
+/* =========================================
+   FAVICON FIX
+========================================= */
+
+app.get("/favicon.ico",(req,res)=>{
+
+    res.status(204).end();
+
+});
+
+/* =========================================
+   HEALTH CHECK
+========================================= */
+
+app.get("/api/health",(req,res)=>{
+
+    res.json({
+
+        success:true,
+
+        status:"ONLINE",
+
+        node:
+        process.version,
+
+        astro:
+        astro.ready,
+
+        astroError:
+        astro.error,
+
+        platform:
+        process.platform,
+
+        uptime:
+        process.uptime(),
+
+        vercel:
+        !!process.env.VERCEL,
+
+        timestamp:
+        new Date().toISOString()
+
+    });
+
+});
+
+/* =========================================
+   TEST API
+========================================= */
+
+app.get("/api/test",(req,res)=>{
+
+    res.json({
+
+        success:true,
+
+        message:
+        "AstroKundli API Working",
+
+        astrology:
+        astro.ready
+
+    });
+
+});
+
+/* =========================================
    HOME
-========================= */
+========================================= */
 
 app.get("/",(req,res)=>{
 
@@ -130,9 +248,9 @@ app.get("/",(req,res)=>{
 
 });
 
-/* =========================
+/* =========================================
    KUNDLI PAGE
-========================= */
+========================================= */
 
 app.get("/kundli",(req,res)=>{
 
@@ -150,84 +268,35 @@ app.get("/kundli",(req,res)=>{
 
 });
 
-/* =========================
-   STATUS API
-========================= */
-
-app.get("/api/status",(req,res)=>{
-
-    res.status(200).json({
-
-        success:true,
-
-        app:"AstroKundli AI",
-
-        status:"RUNNING",
-
-        version:"5.0",
-
-        platform:
-        process.platform,
-
-        node:
-        process.version,
-
-        uptime:
-        process.uptime(),
-
-        timestamp:
-        new Date().toISOString()
-
-    });
-
-});
-
-/* =========================
-   HEALTH API
-========================= */
-
-app.get("/api/health",(req,res)=>{
-
-    res.status(200).json({
-
-        success:true,
-
-        health:"GOOD",
-
-        server:"ONLINE",
-
-        astrologyEngine:"ACTIVE",
-
-        vercel:
-        process.env.VERCEL
-        ? true
-        : false
-
-    });
-
-});
-
-/* =========================
-   GENERATE KUNDLI
-========================= */
+/* =========================================
+   KUNDLI GENERATOR
+========================================= */
 
 app.post(
 
     "/submit",
 
-    async (req,res)=>{
+    async(req,res)=>{
 
         try{
 
-            console.log(
-                "Incoming Body:"
-            );
+            if(!astro.ready){
 
-            console.log(req.body);
+                return res.status(500).json({
 
-            /* =========================
-               BODY
-            ========================== */
+                    success:false,
+
+                    message:
+                    "Astrology Engine Failed",
+
+                    error:
+                    astro.error
+
+                });
+
+            }
+
+            const data = req.body;
 
             const {
 
@@ -241,11 +310,7 @@ app.post(
                 second,
                 place
 
-            } = req.body;
-
-            /* =========================
-               VALIDATION
-            ========================== */
+            } = data;
 
             if(
 
@@ -271,131 +336,113 @@ app.post(
 
             }
 
-            /* =========================
-               USER DATA
-            ========================== */
-
-            const userData = {
+            const birthData = {
 
                 name,
 
                 gender,
 
                 day:
-                parseInt(day),
+                Number(day),
 
                 month:
-                parseInt(month),
+                Number(month),
 
                 year:
-                parseInt(year),
+                Number(year),
 
                 hour:
-                parseInt(hour),
+                Number(hour),
 
                 minute:
-                parseInt(minute),
+                Number(minute),
 
                 second:
-                parseInt(second || 0),
+                Number(second || 0),
 
                 place
 
             };
 
-            console.log(
-                "Processed User:"
-            );
-
-            console.log(userData);
-
-            /* =========================
-               PLANETS
-            ========================== */
+            const calculations =
+            astro.engine.calculations;
 
             const planets =
-
-            calculatePlanets(
-                userData
+            calculations.calculatePlanets(
+                birthData
             );
-
-            /* =========================
-               CORE ASTROLOGY
-            ========================== */
 
             const lagna =
-
-            calculateLagna(
-                userData
-            );
-
-            const nakshatra =
-
-            calculateNakshatra(
-                planets
+            calculations.calculateLagna(
+                birthData
             );
 
             const moonSign =
-
-            calculateMoonSign(
+            calculations.calculateMoonSign(
                 planets
             );
 
             const sunSign =
+            calculations.calculateSunSign(
+                planets
+            );
 
-            calculateSunSign(
+            const nakshatra =
+            calculations.calculateNakshatra(
                 planets
             );
 
             const manglik =
-
-            calculateManglik(
+            calculations.calculateManglik(
                 planets
             );
 
-            /* =========================
-               AI PREDICTIONS
-            ========================== */
+            let predictions = {};
 
-            const predictions =
+            try{
 
-            calculatePredictions({
+                predictions =
+                calculations.calculatePredictions({
 
-                planets,
-                lagna,
-                moonSign,
-                sunSign,
-                manglik,
-                nakshatra
+                    planets,
+                    lagna,
+                    moonSign,
+                    sunSign,
+                    nakshatra,
+                    manglik
 
-            });
+                });
 
-            /* =========================
-               RESPONSE
-            ========================== */
+            }
 
-            const response = {
+            catch(error){
+
+                console.log(
+                    "Prediction Engine Failed"
+                );
+
+            }
+
+            res.json({
 
                 success:true,
 
-                generatedAt:
+                generated:
                 new Date().toISOString(),
 
                 kundli:{
 
-                    basic:{
+                    personal:{
 
                         name,
-
                         gender,
+                        place,
 
                         dob:
                         `${day}/${month}/${year}`,
 
                         tob:
-                        `${hour}:${minute}:${second || "00"}`,
-
-                        place
+                        `${hour}:${minute}:${second || 0}`
 
                     },
 
@@ -415,23 +462,13 @@ app.post(
 
                 }
 
-            };
-
-            console.log(
-                "KUNDLI GENERATED"
-            );
-
-            res.status(200).json(
-                response
-            );
+            });
 
         }
 
         catch(error){
 
-            console.log(
-                "SERVER ERROR:"
-            );
+            console.log("KUNDLI ERROR");
 
             console.log(error);
 
@@ -439,16 +476,11 @@ app.post(
 
                 success:false,
 
+                message:
+                "Kundli generation failed",
+
                 error:
-                error.message,
-
-                stack:
-                process.env.NODE_ENV
-                !== "production"
-
-                ? error.stack
-
-                : undefined
+                error.message
 
             });
 
@@ -458,9 +490,25 @@ app.post(
 
 );
 
-/* =========================
+/* =========================================
+   PDF TEST
+========================================= */
+
+app.get("/api/pdf-test",(req,res)=>{
+
+    res.json({
+
+        success:true,
+
+        pdf:"READY"
+
+    });
+
+});
+
+/* =========================================
    404
-========================= */
+========================================= */
 
 app.use((req,res)=>{
 
@@ -468,42 +516,37 @@ app.use((req,res)=>{
 
         success:false,
 
-        message:"Route Not Found"
+        message:"Route not found"
 
     });
 
 });
 
-/* =========================
+/* =========================================
    GLOBAL ERROR HANDLER
-========================= */
+========================================= */
 
-app.use(
+app.use((error,req,res,next)=>{
 
-    (error,req,res,next)=>{
+    console.log("GLOBAL ERROR");
 
-        console.log(
-            "GLOBAL ERROR:"
-        );
+    console.log(error);
 
-        console.log(error);
+    res.status(500).json({
 
-        res.status(500).json({
+        success:false,
 
-            success:false,
+        message:"Internal Server Error",
 
-            message:
-            "Internal Server Error"
+        error:error.message
 
-        });
+    });
 
-    }
+});
 
-);
-
-/* =========================
+/* =========================================
    PROCESS ERRORS
-========================= */
+========================================= */
 
 process.on(
 
@@ -512,7 +555,7 @@ process.on(
     (error)=>{
 
         console.log(
-            "UNCAUGHT EXCEPTION:"
+            "UNCAUGHT EXCEPTION"
         );
 
         console.log(error);
@@ -528,7 +571,7 @@ process.on(
     (reason)=>{
 
         console.log(
-            "UNHANDLED REJECTION:"
+            "UNHANDLED REJECTION"
         );
 
         console.log(reason);
@@ -537,46 +580,32 @@ process.on(
 
 );
 
-/* =========================
-   VERCEL EXPORT
-========================= */
+/* =========================================
+   EXPORT
+========================================= */
 
 module.exports = app;
 
-/* =========================
-   LOCAL SERVER ONLY
-========================= */
+/* =========================================
+   LOCAL SERVER
+========================================= */
 
-if(
+if(!isProduction){
 
-    process.env.NODE_ENV !==
-    "production"
+    app.listen(PORT,()=>{
 
-){
+        console.log(`
 
-    app.listen(
+==================================
 
-        PORT,
+AstroKundli AI LIVE
 
-        ()=>{
-
-            console.log(`
-
-========================================
-
-🚀 AstroKundli AI LIVE
-
-🌐 URL:
 http://localhost:${PORT}
 
-⚡ Astrology Engine Active
-
-========================================
+==================================
 
 `);
 
-        }
-
-    );
+    });
 
 }
