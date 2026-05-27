@@ -460,19 +460,19 @@ app.post(
 
                 kundli:{
 
-                    personal:{
+    basic:{
 
-                        name,
-                        gender,
-                        place,
+        name,
+        gender,
+        place,
 
-                        dob:
-                        `${day}/${month}/${year}`,
+        dob:
+        `${day}/${month}/${year}`,
 
-                        tob:
-                        `${hour}:${minute}:${second || 0}`
+        tob:
+        `${hour}:${minute}:${second || 0}`
 
-                    },
+    },
 
                     astrology:{
 

@@ -131,20 +131,49 @@ function createCard(
    HERO
 ========================= */
 
-function renderHero() {
+function renderHero(){
 
-    userName.innerHTML =
+    const heroTitle =
+    document.querySelector(
+        "#userName"
+    );
 
-        kundli.basic.name;
+    const heroInfo =
+    document.querySelector(
+        "#userInfo"
+    );
 
-    userInfo.innerHTML =
+    if(
 
-        `
-        ${kundli.astrology.lagna}
-        Lagna •
-        ${kundli.astrology.nakshatra}
-        Nakshatra
-        `;
+        !kundli ||
+
+        !kundli.personal
+
+    ){
+
+        heroTitle.innerHTML =
+        "AstroKundli AI";
+
+        heroInfo.innerHTML =
+        "Kundli data unavailable";
+
+        return;
+
+    }
+
+    heroTitle.innerHTML =
+
+    kundli.personal.name ||
+
+    "Unknown User";
+
+    heroInfo.innerHTML =
+
+    `
+    ${kundli.personal.dob || ""}
+    •
+    ${kundli.personal.place || ""}
+    `;
 
 }
 
