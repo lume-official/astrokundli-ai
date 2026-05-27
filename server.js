@@ -3,6 +3,10 @@ const path = require("path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
+/* =========================
+   ENV
+========================= */
+
 dotenv.config();
 
 /* =========================
@@ -31,18 +35,59 @@ const PORT =
 process.env.PORT || 3000;
 
 /* =========================
-   MIDDLEWARE
+   SECURITY + PERFORMANCE
 ========================= */
 
-app.use(cors());
+app.disable("x-powered-by");
 
-app.use(express.json());
+app.use(cors({
+
+    origin:"*",
+
+    methods:[
+        "GET",
+        "POST"
+    ]
+
+}));
+
+app.use(express.json({
+
+    limit:"10mb"
+
+}));
 
 app.use(express.urlencoded({
 
-    extended:true
+    extended:true,
+
+    limit:"10mb"
 
 }));
+
+/* =========================
+   REQUEST LOGGER
+========================= */
+
+app.use((req,res,next)=>{
+
+    console.log(`
+
+========================================
+🌍 ${req.method}
+📍 ${req.url}
+🕒 ${new Date().toLocaleString()}
+========================================
+
+`);
+
+    next();
+
+});
+
+/* =========================
+   STATIC FILES
+========================= */
 
 app.use(
 
@@ -51,14 +96,22 @@ app.use(
         path.join(
             __dirname,
             "public"
-        )
+        ),
+
+        {
+
+            maxAge:"1d",
+
+            etag:true
+
+        }
 
     )
 
 );
 
 /* =========================
-   HOME PAGE
+   HOME
 ========================= */
 
 app.get("/",(req,res)=>{
@@ -66,33 +119,14 @@ app.get("/",(req,res)=>{
     res.sendFile(
 
         path.join(
+
             __dirname,
             "public",
             "index.html"
+
         )
 
     );
-
-});
-
-/* =========================
-   STATUS API
-========================= */
-
-app.get("/api/status",(req,res)=>{
-
-    res.json({
-
-        success:true,
-
-        server:"Running",
-
-        astrologyEngine:
-        "Astronomy Engine",
-
-        version:"4.0"
-
-    });
 
 });
 
@@ -105,12 +139,71 @@ app.get("/kundli",(req,res)=>{
     res.sendFile(
 
         path.join(
+
             __dirname,
             "public",
             "kundli.html"
+
         )
 
     );
+
+});
+
+/* =========================
+   STATUS API
+========================= */
+
+app.get("/api/status",(req,res)=>{
+
+    res.status(200).json({
+
+        success:true,
+
+        app:"AstroKundli AI",
+
+        status:"RUNNING",
+
+        version:"5.0",
+
+        platform:
+        process.platform,
+
+        node:
+        process.version,
+
+        uptime:
+        process.uptime(),
+
+        timestamp:
+        new Date().toISOString()
+
+    });
+
+});
+
+/* =========================
+   HEALTH API
+========================= */
+
+app.get("/api/health",(req,res)=>{
+
+    res.status(200).json({
+
+        success:true,
+
+        health:"GOOD",
+
+        server:"ONLINE",
+
+        astrologyEngine:"ACTIVE",
+
+        vercel:
+        process.env.VERCEL
+        ? true
+        : false
+
+    });
 
 });
 
@@ -125,6 +218,12 @@ app.post(
     async (req,res)=>{
 
         try{
+
+            console.log(
+                "Incoming Body:"
+            );
+
+            console.log(req.body);
 
             /* =========================
                BODY
@@ -143,12 +242,6 @@ app.post(
                 place
 
             } = req.body;
-
-            console.log(
-                "Incoming Request:"
-            );
-
-            console.log(req.body);
 
             /* =========================
                VALIDATION
@@ -172,7 +265,7 @@ app.post(
                     success:false,
 
                     message:
-                    "All fields required"
+                    "Missing required fields"
 
                 });
 
@@ -185,6 +278,7 @@ app.post(
             const userData = {
 
                 name,
+
                 gender,
 
                 day:
@@ -216,7 +310,7 @@ app.post(
             console.log(userData);
 
             /* =========================
-               CALCULATIONS
+               PLANETS
             ========================== */
 
             const planets =
@@ -225,11 +319,9 @@ app.post(
                 userData
             );
 
-            console.log(
-                "PLANETS:"
-            );
-
-            console.log(planets);
+            /* =========================
+               CORE ASTROLOGY
+            ========================== */
 
             const lagna =
 
@@ -261,6 +353,10 @@ app.post(
                 planets
             );
 
+            /* =========================
+               AI PREDICTIONS
+            ========================== */
+
             const predictions =
 
             calculatePredictions({
@@ -275,18 +371,22 @@ app.post(
             });
 
             /* =========================
-               FINAL RESPONSE
+               RESPONSE
             ========================== */
 
             const response = {
 
                 success:true,
 
+                generatedAt:
+                new Date().toISOString(),
+
                 kundli:{
 
                     basic:{
 
                         name,
+
                         gender,
 
                         dob:
@@ -318,17 +418,19 @@ app.post(
             };
 
             console.log(
-                "KUNDLI SUCCESS"
+                "KUNDLI GENERATED"
             );
 
-            res.json(response);
+            res.status(200).json(
+                response
+            );
 
         }
 
         catch(error){
 
             console.log(
-                "FULL SERVER ERROR:"
+                "SERVER ERROR:"
             );
 
             console.log(error);
@@ -337,11 +439,16 @@ app.post(
 
                 success:false,
 
-                message:
+                error:
                 error.message,
 
                 stack:
-                error.stack
+                process.env.NODE_ENV
+                !== "production"
+
+                ? error.stack
+
+                : undefined
 
             });
 
@@ -361,29 +468,115 @@ app.use((req,res)=>{
 
         success:false,
 
-        message:"Page Not Found"
+        message:"Route Not Found"
 
     });
 
 });
 
 /* =========================
-   START SERVER
+   GLOBAL ERROR HANDLER
 ========================= */
 
-app.listen(PORT,()=>{
+app.use(
 
-    console.log(`
+    (error,req,res,next)=>{
+
+        console.log(
+            "GLOBAL ERROR:"
+        );
+
+        console.log(error);
+
+        res.status(500).json({
+
+            success:false,
+
+            message:
+            "Internal Server Error"
+
+        });
+
+    }
+
+);
+
+/* =========================
+   PROCESS ERRORS
+========================= */
+
+process.on(
+
+    "uncaughtException",
+
+    (error)=>{
+
+        console.log(
+            "UNCAUGHT EXCEPTION:"
+        );
+
+        console.log(error);
+
+    }
+
+);
+
+process.on(
+
+    "unhandledRejection",
+
+    (reason)=>{
+
+        console.log(
+            "UNHANDLED REJECTION:"
+        );
+
+        console.log(reason);
+
+    }
+
+);
+
+/* =========================
+   VERCEL EXPORT
+========================= */
+
+module.exports = app;
+
+/* =========================
+   LOCAL SERVER ONLY
+========================= */
+
+if(
+
+    process.env.NODE_ENV !==
+    "production"
+
+){
+
+    app.listen(
+
+        PORT,
+
+        ()=>{
+
+            console.log(`
 
 ========================================
 
-🚀 AstroKundli AI Running
+🚀 AstroKundli AI LIVE
 
 🌐 URL:
 http://localhost:${PORT}
+
+⚡ Astrology Engine Active
 
 ========================================
 
 `);
 
-});
+        }
+
+    );
+
+}
