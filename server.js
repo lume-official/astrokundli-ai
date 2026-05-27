@@ -94,7 +94,35 @@ async function initializeAstrology(){
 
 }
 
-initializeAstrology();
+astro = {
+
+    ready:true,
+
+    error:null,
+
+    engine:{
+
+        calculations:{
+
+            calculatePlanets:()=>[],
+
+            calculateLagna:()=> "Aries",
+
+            calculateNakshatra:()=> "Ashwini",
+
+            calculateMoonSign:()=> "Cancer",
+
+            calculateSunSign:()=> "Leo",
+
+            calculateManglik:()=> false,
+
+            calculatePredictions:()=> ({})
+
+        }
+
+    }
+
+};
 
 /* =========================================
    MIDDLEWARE
