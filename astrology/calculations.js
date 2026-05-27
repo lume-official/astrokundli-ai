@@ -1,5 +1,25 @@
 const {
 
+    calculateCurrentTransits,
+
+    interpretTransits
+
+} = require(
+    "./transits"
+);
+
+const {
+
+    calculateNavamsa,
+
+    interpretNavamsa
+
+} = require(
+    "./navamsa"
+);
+
+const {
+
     calculateYogas
 
 } = require(
@@ -858,6 +878,36 @@ calculateYogas(
     planets
 );
 
+/* =========================
+   NAVAMSA
+========================= */
+
+const navamsa =
+
+calculateNavamsa(
+    planets
+);
+
+const navamsaInsights =
+
+interpretNavamsa(
+    navamsa
+);
+
+/* =========================
+   TRANSITS
+========================= */
+
+const currentTransits =
+
+calculateCurrentTransits();
+
+const transitInsights =
+
+interpretTransits(
+    currentTransits
+);
+
         /* =========================
            VARIABLES
         ========================== */
@@ -1093,6 +1143,14 @@ calculateYogas(
             aspectInterpretations,
 
             yogas,
+
+            navamsa,
+
+            navamsaInsights,
+
+            currentTransits,
+
+            transitInsights,
 
             dashas
 
